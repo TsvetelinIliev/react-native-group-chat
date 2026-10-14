@@ -24,7 +24,7 @@ export default function RegisterScreen({
             return alert('Password Missmatch');
         }
 
-        axios.post('http://192.168.1.211:4000/register', {
+        axios.post('http://192.168.1.59:4000/register', {
             name,
             email,
             password,

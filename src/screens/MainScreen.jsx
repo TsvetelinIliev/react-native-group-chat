@@ -25,7 +25,7 @@ export default function MainScreen() {
         //     .catch(error => {
         //         console.error('Failed to load messages', error);
         //     });
-        fetch('http://192.168.1.211:4000/messages')
+        fetch('http://192.168.1.59:4000/messages')
             .then(response => response.json())
             .then(data => setMessages(data))
             .catch(error => console.error('Failed to load messages', error.message));

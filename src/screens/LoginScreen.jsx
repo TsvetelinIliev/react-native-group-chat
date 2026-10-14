@@ -18,7 +18,7 @@ export default function LoginScreen({
     const { login }  = useUserContext();
 
     const loginHandler = () => {
-        axios.post('http://192.168.1.211:4000/login', {
+        axios.post('http://192.168.1.59:4000/login', {
             email,
             password,
         })
