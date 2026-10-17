@@ -2,51 +2,52 @@ import { useEffect, useState } from 'react';
 
 import { UserContext } from "./UserContext";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SecureStore from 'expo-secure-store';
+import { useSecureState } from '../../hooks/useSecureState';
 
 export default function UserProvider({
     children,
 }) {
-    const [state, setState] = useState(null);
+    const [state, setState] = useSecureState('user', null);
 
     useEffect(() => {
         loadUser();
     }, []);
 
-    const loginHandler = async (email, name, id) => {
+    const loginHandler = async (user,accessToken) => {
         const newState = {
-            email,
-            name,
-            id,
+            ...user,
+            accessToken
         };
 
-        await saveUser(newState);
+        await setState(newState);
     };
 
-    const saveUser = async (userData) => {
-        try {
-            await AsyncStorage.setItem('user', JSON.stringify(userData));
-
-            setState(userData);
-        } catch (error) {
-            console.error('Failed to save user data to AsyncStorage', error);
-        }
-    }
-
-    const loadUser = async () => {
-        try {
-            const userDataString = await AsyncStorage.getItem('user');
+    // const saveUser = async (userData) => {
+    //     try {
             
-            if (userDataString) {
-                const userData = JSON.parse(userDataString);
-                setState(userData);
-            }
-        } catch (error) {
-            console.error('Failed to load user data from AsyncStorage', error);
-        }
-    }
+
+    //         setState(userData);
+    //     } catch (error) {
+    //         console.error('Failed to save user data to SecureStore', error);
+    //     }
+    // }
+
+    // const loadUser = async () => {
+    //     try {
+    //         const userDataString = await SecureStore.getItemAsync('user');
+            
+    //         if (userDataString) {
+    //             const userData = JSON.parse(userDataString);
+    //             setState(userData);
+    //         }
+    //     } catch (error) {
+    //         console.error('Failed to load user data from SecureStore', error);
+    //     }
+    // }
 
     const logout = () => {
-        saveUser(null);
+        setState(null);
     };
 
     const contextData = {

@@ -25,7 +25,7 @@ export default function MainScreen() {
         //     .catch(error => {
         //         console.error('Failed to load messages', error);
         //     });
-        fetch('http://192.168.1.59:4000/messages')
+        fetch(`${process.env.EXPO_PUBLIC_API_URL}/messages`)
             .then(response => response.json())
             .then(data => setMessages(data))
             .catch(error => console.error('Failed to load messages', error.message));
@@ -39,7 +39,7 @@ export default function MainScreen() {
             timestamp: new Date().toISOString(),
         };
 
-        axios.post('http://192.168.1.211:4000/messages', newMessage)
+        axios.post(`${process.env.EXPO_PUBLIC_API_URL}/messages`, newMessage)
             .then(response => {
                 setMessages(prevMessages => [...prevMessages, response.data]);
                 setMessageText('');
@@ -56,10 +56,13 @@ export default function MainScreen() {
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
             <View style={styles.header}>
-                <Text style={styles.headerTitle}>Group Chat</Text>
+                <Text style={styles.headerTitle}>Group Chat </Text>
+                <View style={{flexDirection: 'row', alignItems: 'center', gap:10}} >
+                    <Text style={{color: '#ffffff3f' , fontWeight: '600'}} >{user.name}</Text>
                 <TouchableOpacity style={styles.logoutButton} onPress={logout}>
                     <Text style={styles.logoutText}>Logout</Text>
                 </TouchableOpacity>
+                </View>
             </View>
 
             <View style={styles.messagesList}>
