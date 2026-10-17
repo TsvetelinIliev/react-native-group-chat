@@ -6,8 +6,10 @@
     "start": "cross-env NODE_ENV=development expo start",
     "android:go": "cross-env NODE_ENV=development expo start --android",
     "ios:go": "cross-env NODE_ENV=development expo start --ios",
-    "android": "expo run:android",
-    "web": "cross-env NODE_ENV=development expo start --web"
+    "android": "cross-env NODE_ENV=development expo run:android",
+    "web": "cross-env NODE_ENV=development expo start --web",
+    "prebuild": "cross-env NODE_ENV=production expo prebuild",
+    "build:apk": "cd android && gradlew assembleRelease"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "2.2.0",
